@@ -13,3 +13,19 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+    id Int @id @default(autoincrement())
+    name String
+    email String @unique
+    balance Decimal @default(0)
+    payments Payment[]
+}
+
+model Payment {
+    id Int @id @default(autoincrement())
+    amount Decimal @db.Decimal(10,2)
+    createdAt DateTime @default(now())
+    userId  Int
+    user User @relation(fields: [userId], references: [id])
+}
