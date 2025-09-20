@@ -8,4 +8,15 @@ export class UsersService {
     async findAll() {
         return this.prisma.user.findMany();
     }
+
+    async findOne(id: number){
+        return this.prisma.user.findUnique({
+            where: { id },
+            select: {
+                id: true,
+                name: true,
+                balance: true,
+            },
+        });
+    }
 }
